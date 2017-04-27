@@ -1,5 +1,4 @@
 # Import dependencies.
-
 import pandas as pd
 import gzip
 from os import getcwd, listdir
@@ -29,3 +28,8 @@ def getDF(path):
 # Mac version.
 meta_df = getDF("/Users/ray/Desktop/meta_Movies_and_TV.json.gz")
 reviews_df = getDF("/Users/ray/Desktop/reviews_Movies_and_TV.json.gz")
+
+# Randomly select 100000 observations.
+random.seed(44)
+random_idx = random.sample(range(1, len(reviews_df)+1), 100000)
+reviews_subset = reviews_df.iloc[random_idx].reset_index()
