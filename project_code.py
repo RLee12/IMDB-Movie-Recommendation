@@ -33,3 +33,7 @@ reviews_df = getDF("/Users/ray/Desktop/reviews_Movies_and_TV.json.gz")
 random.seed(44)
 random_idx = random.sample(range(1, len(reviews_df)+1), 100000)
 reviews_subset = reviews_df.iloc[random_idx].reset_index()
+
+# reviews_subset.to_csv(getcwd() + "/amazon_reviews.csv")
+# reviews_df.to_csv(getcwd() + "/amazon_reviews_full.csv")
+# meta_df.to_csv(getcwd() + "/amazon_meta.csv")
