@@ -19,7 +19,7 @@ def getDF(path):
     return pd.DataFrame.from_dict(df, orient = 'index')
     
 # To get a subset of the data: load the whole dataset first, then randomly sample the whole dataset, and get a subset
-# of , for example, 10000 observations.
+# of , for example, 100000 observations.
 
 # Windows version.
 # reviews_df = getDF("C:\\Users\\m5191\\Downloads\\reviews_Movies_and_TV.json.gz")
