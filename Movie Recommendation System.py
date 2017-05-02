@@ -76,14 +76,14 @@ reviews_df = pd.read_csv("amazon_reviews.csv")
 print "The number of different reviewr names in the dataset: {}".format(len(set(reviews_df.reviewerName)))
 
 
-# In[73]:
+# In[93]:
 
 # Plot the user rating distribution.
 
 N_star_categories = 5
 colors = np.array(['#E50029', '#E94E04', '#EEC708', '#A5F30D', '#62F610'])
 star_labels = np.array([star_label+1 for star_label in range(N_star_categories)])
-star_category_dist_fig = plt.figure(figsize = (10, 8), dpi = 100)
+star_category_dist_fig = plt.figure(figsize = (12, 8))
 bar_plot_indices = np.arange(N_star_categories)
 star_category_absolute_frequencies = reviews_df.overall.value_counts(ascending = True)
 star_category_relative_frequencies = (np.array(star_category_absolute_frequencies)/
@@ -104,7 +104,9 @@ plt.title('User Rating Distribution for {} Amazon Movie and TV Reviews'.format(l
 plt.show()
 
 
-# In[88]:
+# <font size="+0.5">A random subset of the whole dataset shows that the distribution of user ratings is extremely skewed to 5-star rating, which accounts for ~60% of the dataset.</font>
+
+# In[102]:
 
 reviewText_df = pd.DataFrame()
 reviewText_df["reviewText"] = reviews_df["reviewText"]
@@ -115,19 +117,19 @@ word_count = reviewText_df["number_of_word"].value_counts()
 review_word_count_dict = dict(reviewText_df["number_of_word"].value_counts())
 
 print("The frequency for the number of words that are no more than 300 is {}"
-      .format(len({key: value for key, value in review_word_count_dict.items() if value <= 300})))
+      .format(len({key: value for key, value in review_word_count_dict.items() if value <= 50})))
 
 
-# In[85]:
+# In[103]:
 
-review_word_count_dict = {key: value for key, value in review_word_count_dict.items() if value > 300}
+review_word_count_dict = {key: value for key, value in review_word_count_dict.items() if value > 50}
 
 
-# In[87]:
+# In[104]:
 
 # Plot the distribution of the number of words for each review.
 
-plt.figure(figsize = (12, 6), dpi = 100)
+plt.figure(figsize = (50, 10))
 sns.barplot(review_word_count_dict.keys(), review_word_count_dict.values(), alpha = 0.8, color = color[0])
 plt.ylabel('Number of Occurrences', fontsize = 12)
 plt.xlabel('Number of Words in the Review', fontsize = 12)
