@@ -6,11 +6,11 @@ We are interested in developing a movie recommendation engine. The recommendatio
 engine will be able to suggest similar movies to users based on users’ watched movie history.
 The use of an efficient and accurate recommendation engine is crucial in today’s internet
 industry, because it can vastly reduce user's time effort to look up for similar product/service,
-and therefore potentially enrich user experience and increase sales for e-commerce. Since the
-dataset contains rich information, we might use the dataset to do the following research if
-we have enough time: 1). plot a network graph of the partnership among actors; 2). use movie
-reviews to perform sentiment analysis; 3). use movie reviews to find out the trending words of
-the movie.
+and therefore potentially enrich user experience and increase sales for e-commerce. The primary goal of our project is to build a movie recommendation engine and to experience the idea of that recommendation algorithm for educational purpose. Our recommendation engine will predict user’s potential favourite movies from their pre-existing ratings and reviews on other movies.
+
+### The Intricacy of the Project
+
+We originally planned to employ multiple recommendation algorithms in the project and compare their differences. Later we realized that different algorithms required different data input format, and the work to reformat our raw dataset was tedious and time-consuming. Therefore, we adjusted our scheme to focus on just one recommendation algorithm and explore any potential improvements of it by the end of this course.
 
 ### Skill Sets
 
@@ -46,6 +46,9 @@ release date, sales of box office, etc.
 2. Amazon user reviews for movies and TV series containing review text, user
 review count, user rating, etc.
 <br>Source: http://jmcauley.ucsd.edu/data/amazon/</br>
+
+3. MovieLens Latest Dataset: containing movie name, movie genre, movie rating, etc.
+<br>Source: http://files.grouplens.org/datasets/movielens/ml-latest.zip</br>
 
 Auxiliary Data:
 
