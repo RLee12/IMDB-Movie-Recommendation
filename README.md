@@ -45,7 +45,7 @@ release date, sales of box office, etc.
 
 2. Amazon user reviews for movies and TV series containing review text, user
 review count, user rating, etc.
-<br>Source: http://jmcauley.ucsd.edu/data/amazon/</br>
+<br>Source: http://jmcauley.ucsd.edu/data/amazon/ (Gain permission upon request)</br>
 
 3. MovieLens Latest Dataset: containing movie name, movie genre, movie rating, etc.
 <br>Source: http://files.grouplens.org/datasets/movielens/ml-latest.zip</br>
