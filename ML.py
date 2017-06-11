@@ -20,11 +20,7 @@ class MeanEmbeddingVectorizer(object):
         return self
 
     def transform(self, X):
-        return np.array([
-            np.mean([self.word2vec[w] for w in words if w in self.word2vec]
-                    or [np.zeros(self.dim)], axis=0)
-            for words in X
-        ])
+        return np.array([np.mean([self.word2vec[w] for w in words if w in self.word2vec] or [np.zeros(self.dim)], axis=0) for words in X])
 
 
 def split_word(x):
@@ -33,19 +29,22 @@ def split_word(x):
     else:
         return "None"
 
-
+# read the file
 user_table = pd.read_csv("df.csv", encoding='ISO-8859-1')
 imdb_table = pd.read_csv("9066.csv")
+# sample 100 random movies to do the prediction
 imdb_table_sample = imdb_table.sample(n=100).reset_index(drop=True)
+# load w2v model
 model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 w2v = {w: vec for w, vec in zip(model.index2word, model.syn0)}
+# pipeline
 pipeline = Pipeline([("word2vec vectorizer", MeanEmbeddingVectorizer(w2v)), ("linear svr", SVR(kernel="linear"))])
+
 user_table_splitted = user_table.groupby("userId")
 user_all = list(user_table_splitted.grouper)
 result_dict = []
 
 for user in user_all:
-    print(user)
     temp_table = user_table_splitted.get_group(user)
     merged_table = pd.merge(temp_table, imdb_table)
     merged_table.insert(merged_table.shape[1], "overview_splitted", "")
