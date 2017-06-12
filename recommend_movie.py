@@ -77,6 +77,9 @@ def recommend_movie(options):
 	new_user_ratings = zip(list(np.repeat(new_user_ID, num_movie)), 
 		list(np.random.choice(movie_id, num_movie)), list(np.random.choice(rating, num_rating)))
 
+	watched_movies = [i[1] for i in new_user_ratings]
+	watched_movies_names = movies[movies["movieId"].isin(watched_movies)]["title"]
+
 	new_user_ratings_RDD = sc.parallelize(new_user_ratings)
 	complete_data_with_new_ratings_RDD = small_ratings_data.union(new_user_ratings_RDD)
 
@@ -86,7 +89,8 @@ def recommend_movie(options):
 
 	new_user_ratings_ids = map(lambda x: x[1], new_user_ratings)
 
-	new_user_unrated_movies_RDD = complete_movies_data.filter(lambda x: x[0] not in new_user_ratings_ids).map(lambda x: (new_user_ID, x[0]))
+	new_user_unrated_movies_RDD = (complete_movies_data
+		.filter(lambda x: x[0] not in new_user_ratings_ids).map(lambda x: (new_user_ID, x[0])))
 
 	# Use the input RDD, new_user_unrated_movies_RDD, with new_ratings_model.predictAll() 
 	# to predict new ratings for the movies that new user has not seen.
@@ -99,13 +103,16 @@ def recommend_movie(options):
 	new_user_recommendations_rating_title_and_count_RDD = (new_user_recommendations_rating_title_and_count_RDD
 															.map(lambda r: (r[1][0][1], r[1][0][0], r[1][1])))
 
-	top_movies = new_user_recommendations_rating_title_and_count_RDD.filter(lambda r: r[2] >= 25).takeOrdered(25, key = lambda x: -x[1])
+	top_movies = (new_user_recommendations_rating_title_and_count_RDD
+		.filter(lambda r: r[2] >= 25).takeOrdered(25, key = lambda x: -x[1]))
 
-	print "Starting recommending movies..."
+	print "Start recommending movies..."
 	print "---------------------------------------------------------------------------------------"
 
-	print new_user_ratings
-
+	print "User {} has watched these movies:".format(options.u)
+	print ""
+	print "%s" % "\n".join(map(str, watched_movies_names))
+	print ""
 	print ("Top recommended movies (with more than 25 reviews):\n%s" % "\n".join(map(str, top_movies)))
 	print "---------------------------------------------------------------------------------------"
 	print "{} seconds elapsed".format(time.time()-start_time)
@@ -114,7 +121,7 @@ if __name__ == "__main__":
 	
 	parser = argparse.ArgumentParser(description = "Movie Recommendation")
 	parser.add_argument("--u", help = "User ID", default = 0, type = int)
-	parser.add_argument("--num-movie", help = "Number of movies this user has watched", default = 5, type = int)
+	parser.add_argument("--num-movie", help = "Number of movies this user has watched", default = 20, type = int)
 
 	args = parser.parse_args()
 	recommend_movie(args)
